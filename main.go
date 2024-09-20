@@ -30,6 +30,8 @@ func main() {
 		DB: dbQueries,
 	}
 
+	go cfg.fetchFeedsWorker(2)
+
 	mux := http.NewServeMux()
 
 	mux.HandleFunc("/v1/healthz", handleReadiness)
@@ -41,6 +43,7 @@ func main() {
 	mux.HandleFunc("POST /v1/feed_follows", cfg.middlewareAuth(cfg.handleFollowFeed))
 	mux.HandleFunc("DELETE /v1/feed_follows/{feedFollowID}", cfg.middlewareAuth(cfg.handleUnfollowFeed))
 	mux.HandleFunc("GET /v1/feed_follows", cfg.middlewareAuth(cfg.handleGetAllFeedFollows))
+	mux.HandleFunc("GET /v1/posts", cfg.middlewareAuth(cfg.handleGetPostsByUser))
 
 	server := http.Server{
 		Addr:    fmt.Sprintf(":%s", port),

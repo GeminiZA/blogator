@@ -64,3 +64,35 @@ func databaseUserToUser(user database.User) User {
 		ApiKey:    user.ApiKey,
 	}
 }
+
+type Post struct {
+	ID          uuid.UUID `json:"id"`
+	CreatedAt   time.Time `json:"created_at"`
+	UpdatedAt   time.Time `json:"updated_at"`
+	Title       string    `json:"title"`
+	Url         string    `json:"url"`
+	Description string    `json:"description"`
+	PublishedAt time.Time `json:"published_at"`
+	FeedID      uuid.UUID `json:"feed_id"`
+}
+
+func databasePostToPost(post database.Post) Post {
+	description := ""
+	if post.Description.Valid {
+		description = post.Description.String
+	}
+	publishedAt := time.Time{}
+	if post.PublishedAt.Valid {
+		publishedAt = post.PublishedAt.Time
+	}
+	return Post{
+		ID:          post.ID,
+		CreatedAt:   post.CreatedAt,
+		UpdatedAt:   post.UpdatedAt,
+		Title:       post.Title,
+		Url:         post.Url,
+		Description: description,
+		PublishedAt: publishedAt,
+		FeedID:      post.FeedID,
+	}
+}
