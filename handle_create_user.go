@@ -32,5 +32,5 @@ func (cfg *apiConfig) handleCreateUser(w http.ResponseWriter, r *http.Request) {
 		respondWithError(w, http.StatusInternalServerError, "error creating user")
 		return
 	}
-	respondWithJSON(w, http.StatusOK, user)
+	respondWithJSON(w, http.StatusOK, databaseUserToUser(user))
 }

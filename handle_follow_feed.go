@@ -31,5 +31,5 @@ func (cfg *apiConfig) handleFollowFeed(w http.ResponseWriter, r *http.Request, u
 		respondWithError(w, http.StatusInternalServerError, "cannot follow feed")
 		return
 	}
-	respondWithJSON(w, http.StatusOK, feedFollow)
+	respondWithJSON(w, http.StatusOK, databaseFeedFollowToFeedFollow(feedFollow))
 }

@@ -6,5 +6,5 @@ import (
 )
 
 func (cfg *apiConfig) handleGetUser(w http.ResponseWriter, r *http.Request, user database.User) {
-	respondWithJSON(w, http.StatusOK, user)
+	respondWithJSON(w, http.StatusOK, databaseUserToUser(user))
 }

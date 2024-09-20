@@ -11,5 +11,9 @@ func (cfg *apiConfig) handleGetAllFeeds(w http.ResponseWriter, r *http.Request) 
 		respondWithError(w, http.StatusInternalServerError, "unable to get feeds")
 		return
 	}
+	ret := make([]Feed, len(feeds))
+	for i := range ret {
+		ret[i] = databaseFeedToFeed(feeds[i])
+	}
 	respondWithJSON(w, http.StatusOK, feeds)
 }

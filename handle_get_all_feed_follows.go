@@ -12,5 +12,10 @@ func (cfg *apiConfig) handleGetAllFeedFollows(w http.ResponseWriter, r *http.Req
 		respondWithError(w, http.StatusInternalServerError, "cannot get feed follows")
 		return
 	}
-	respondWithJSON(w, http.StatusOK, feedsFollows)
+	ret := make([]FeedFollow, len(feedsFollows))
+	for i := range ret {
+		ret[i] = databaseFeedFollowToFeedFollow(feedsFollows[i])
+	}
+
+	respondWithJSON(w, http.StatusOK, ret)
 }
